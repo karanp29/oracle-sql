@@ -3,6 +3,7 @@
 select * from 
 customer natural join orders;
 
+-- better way
 -- need to specific attribute name when more than one attr are same
 -- try to explicit the join condition will make it less prone to errors
 -- better query 

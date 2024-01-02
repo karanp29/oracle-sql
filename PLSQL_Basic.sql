@@ -97,8 +97,3 @@ END;
 /
 
 
--- LOOPS
-
---BASIC LOOP
---FOR LOOP
---WHILE
