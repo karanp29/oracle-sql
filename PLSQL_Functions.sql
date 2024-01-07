@@ -38,12 +38,12 @@ END;
 
 -- with multiple paramerter
 -- 
-create or replace function empDetails(eno in number) return varchar2
+create or replace function empDetail(eno in number, ename out varchar2) 
 Is
-ename varchar2(50);
+-- ename varchar2(50);
 begin
 	select emp_name into ename from employ where emp_id = eno;
-	return ename;
+	-- return ename;
 end;
 /
 
@@ -59,21 +59,11 @@ end;
 
 -- with OUT parameter
 -- error code
-create or replace user_score(
-score1 in int,
-score2 in int,
-score3 in int, 
-status out varchar2) 
-return int
+create or replace function user_score(score1 in number) return number
 is
-avg int;
+avg number;
 begin
-	avg := (score1+score2+score3)/3;
-	IF avg>50 then
-		status := 'student pass';
-	ELSE
-		status := 'student fail';
-	end if;
+	avg := score1;
 	return avg;
 end;
 / 

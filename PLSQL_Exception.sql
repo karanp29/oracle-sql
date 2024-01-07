@@ -34,7 +34,33 @@ end;
 /
 
 -- Unnamed Exception - does not provide exception name 
+ Declare
+	exception_name Exception;
+    Pragma
+	Exception_init(exception_name, err_code);
+Begin
+	Execution section
+	Exception when exception_name then handle the exception
+End;
 
+--example
+declare 
+    eno employ.emp_id%type;
+    raise_cus_except Exception;
+    Pragma Exception_init(raise_cus_except,100);
+begin
+    eno := &eno;
+    delete from employ where emp_id = eno;
+    if sql%notfound then
+        raise raise_cus_except;
+    end if;
+    Exception when raise_cus_except then
+	    dbms_output.put_line('no records found for ' || eno);
+end;
+/
+
+2292 - constraint error
+01403 - no data found
 
 -- user defined exception
 
@@ -48,7 +74,7 @@ begin
 	if(p_age >= agelimit) then
 		dbms_output.put_line('age greater than 18 : ' || p_age);
 	else
-	raise age_except;
+	    raise age_except;
 	end if;
 	exception when age_except then
 		dbms_output.put_line('age less than 18 : ' || msg);
