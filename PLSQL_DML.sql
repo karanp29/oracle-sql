@@ -94,3 +94,48 @@ END;
 
 
 --- MERGE two tables
+
+merge into 
+
+create table student2
+(
+stud_id number primary key,
+first_name varchar2(15) not null,
+last_name varchar(12) not null,
+grade varchar(2)
+);
+
+create table student_details as select * from student2;
+
+insert all
+into student2 values(1,'Karan','Shah','B')
+into student2 values(2,'Lalit','Aphale','A*')
+into student2 values(3,'Akshay','Pendbhaje','C')
+into student2 values(4,'Swati','K','A')
+into student2 values(5,'Pallavi','R','B')
+into student2 values(6, 'Shivam','A','B')
+select * from dual;
+
+
+insert all
+into student_details values(1,'Karan','Shah','B')
+into student_details values(2,'Lalit','Aphale','A*')
+into student_details values(3,'Akshay','Pendbhaje','C')
+into student_details values(4,'Swati','K','A')
+select * from dual;
+
+
+merge into student_details x
+using ( select stud_id,first_name,last_name,grade from student2 ) y
+on (x.stud_id = y.stud_id)
+when matched then
+update set
+    x.first_name = y.first_name,
+    x.last_name = y.last_name,
+    x.grade = y.grade
+    where x.first_name <> y.first_name OR 
+        x.last_name <> y.last_name OR
+        x.grade = y.grade
+when not matched then
+insert (x.stud_id,x.first_name,x.last_name,x.grade)
+values (y.stud_id,y.first_name,y.last_name,y.grade);
