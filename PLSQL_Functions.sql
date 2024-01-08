@@ -38,12 +38,12 @@ END;
 
 -- with multiple paramerter
 -- 
-create or replace function empDetail(eno in number, ename out varchar2) 
+create or replace function empDetail(eno in number) return varchar2 
 Is
--- ename varchar2(50);
+ename varchar2(50);
 begin
 	select emp_name into ename from employ where emp_id = eno;
-	-- return ename;
+	return ename;
 end;
 /
 
@@ -52,7 +52,7 @@ Declare
 	ename employ.emp_name%type;
 begin
 	eno := &eno;
-	ename := empDetails(eno);
+	empDetails(eno,ename);
 	dbms_output.put_line('Name of employee : ' || ename);
 end;
 /
